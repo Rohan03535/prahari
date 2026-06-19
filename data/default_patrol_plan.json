@@ -1,0 +1,293 @@
+{
+  "params": {
+    "n_units": 5,
+    "shift_hours": 4.0,
+    "top_hotspots": 25,
+    "shift_label": "Morning (08\u201312)",
+    "scenario_units": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "result": {
+    "routes": [
+      {
+        "unit": 1,
+        "stops": [
+          {
+            "junction": "BTP051 - Safina Plaza Junction",
+            "lat": 12.981247485400711,
+            "lng": 77.60865246934812,
+            "pcis": 57257.0
+          },
+          {
+            "junction": "BTP063 - Siddalingaiah Circle",
+            "lat": 12.97146089768786,
+            "lng": 77.59700305452795,
+            "pcis": 3542.0
+          },
+          {
+            "junction": "BTP108 - Tagore Park Junction",
+            "lat": 12.943985876404804,
+            "lng": 77.57137642080876,
+            "pcis": 3510.0
+          }
+        ],
+        "route_pcis": 64309.0,
+        "n_stops": 3
+      },
+      {
+        "unit": 2,
+        "stops": [
+          {
+            "junction": "BTP044 - Sagar Theatre Junction",
+            "lat": 12.974799237307383,
+            "lng": 77.57886540521419,
+            "pcis": 30913.0
+          },
+          {
+            "junction": "BTP045 - Danvanthri Road Junction",
+            "lat": 12.976946696112805,
+            "lng": 77.5749478003811,
+            "pcis": 8378.0
+          },
+          {
+            "junction": "BTP023 - Mahalaxmi Layout Entrance",
+            "lat": 13.008784487650601,
+            "lng": 77.5490162876506,
+            "pcis": 5857.0
+          },
+          {
+            "junction": "BTP070 - Cholurpalya Junction, Magadi Road",
+            "lat": 12.973459170204478,
+            "lng": 77.5507818570594,
+            "pcis": 4311.0
+          },
+          {
+            "junction": "BTP182 - 19th Main Junction, Rajajinagar",
+            "lat": 12.99938308869258,
+            "lng": 77.55081606254417,
+            "pcis": 3560.0
+          },
+          {
+            "junction": "BTP026 - 1st Block Junction, Rajajinagar",
+            "lat": 13.002287485115303,
+            "lng": 77.55006320440252,
+            "pcis": 3112.0
+          }
+        ],
+        "route_pcis": 56131.0,
+        "n_stops": 6
+      },
+      {
+        "unit": 3,
+        "stops": [
+          {
+            "junction": "BTP040 - Elite Junction",
+            "lat": 12.976580624505093,
+            "lng": 77.57665115110512,
+            "pcis": 26881.0
+          },
+          {
+            "junction": "BTP058 - Subbanna Junction",
+            "lat": 12.979201529368817,
+            "lng": 77.57871217985874,
+            "pcis": 9503.0
+          },
+          {
+            "junction": "BTP038 - Mysore Bank Junction",
+            "lat": 12.97325568368726,
+            "lng": 77.5812103800193,
+            "pcis": 6651.0
+          },
+          {
+            "junction": "BTP016 - 5th Main Road, RPC Layout",
+            "lat": 12.965372956368306,
+            "lng": 77.53753034214105,
+            "pcis": 5268.0
+          },
+          {
+            "junction": "BTP032 - Windsor Circle",
+            "lat": 12.994103698128528,
+            "lng": 77.58669134581102,
+            "pcis": 3981.0
+          },
+          {
+            "junction": "BTP042 - Minsk Square Junction (CTO)",
+            "lat": 12.981185500134952,
+            "lng": 77.59851757692309,
+            "pcis": 3233.0
+          }
+        ],
+        "route_pcis": 55517.0,
+        "n_stops": 6
+      },
+      {
+        "unit": 4,
+        "stops": [
+          {
+            "junction": "BTP082 - KR Market Junction",
+            "lat": 12.964606554616152,
+            "lng": 77.57747065606468,
+            "pcis": 21700.0
+          },
+          {
+            "junction": "BTP027 - Modi Bridge Junction",
+            "lat": 12.998961818313814,
+            "lng": 77.54950327072862,
+            "pcis": 10334.0
+          },
+          {
+            "junction": "BTP001 - 10th Cross, Dr. Rajkumar Road",
+            "lat": 13.00802815583831,
+            "lng": 77.55474759288447,
+            "pcis": 7180.0
+          },
+          {
+            "junction": "BTP083 - AS Char Street, Mysore Road",
+            "lat": 12.96715136324594,
+            "lng": 77.57445182667423,
+            "pcis": 6008.0
+          },
+          {
+            "junction": "BTP104 - Medical College Circle",
+            "lat": 12.959654466171003,
+            "lng": 77.57667845297398,
+            "pcis": 4302.0
+          }
+        ],
+        "route_pcis": 49524.0,
+        "n_stops": 5
+      },
+      {
+        "unit": 5,
+        "stops": [
+          {
+            "junction": "BTP211 - Central Street Junction",
+            "lat": 12.983300799714401,
+            "lng": 77.60338417424119,
+            "pcis": 14706.5
+          },
+          {
+            "junction": "BTP080 - NR Road, SP Road Junction",
+            "lat": 12.964415377154733,
+            "lng": 77.58325827987811,
+            "pcis": 11752.0
+          },
+          {
+            "junction": "BTP057 - Anand Rao Junction",
+            "lat": 12.979285043414635,
+            "lng": 77.57447161839721,
+            "pcis": 10198.0
+          },
+          {
+            "junction": "BTP020 - Hosahalli Metro Station",
+            "lat": 12.974142431071192,
+            "lng": 77.54521469201596,
+            "pcis": 6490.0
+          },
+          {
+            "junction": "BTP043 - Upparpet Junction",
+            "lat": 12.971331537014489,
+            "lng": 77.57556481921274,
+            "pcis": 4600.0
+          }
+        ],
+        "route_pcis": 47746.5,
+        "n_stops": 5
+      }
+    ],
+    "total_intercepted_pcis": 273227.5,
+    "total_available_pcis": 273227.5,
+    "intercept_pct": 100.0
+  },
+  "comparison": {
+    "optimized_pcis": 273227.5,
+    "random_avg_pcis": 273227.5,
+    "naive_pcis": 273227.5,
+    "stop_budget": 25,
+    "improvement_vs_random_pct": 0.0,
+    "improvement_vs_naive_pct": 0.0,
+    "improvement_vs_naive_per_hour_pct": 0.0,
+    "pcis_per_officer_hour": 13661.375,
+    "naive_pcis_per_officer_hour": 13661.375
+  },
+  "plan_metrics": {
+    "pcis_per_officer_hour": 13661.375,
+    "naive_pcis_per_officer_hour": 13661.375,
+    "improvement_vs_naive_pct": 0.0,
+    "improvement_vs_naive_per_hour_pct": 0.0,
+    "intercept_pct": 100.0,
+    "est_stops": 25,
+    "est_fines_rs": 12500,
+    "load_balance_ratio": 0.7424543998507207,
+    "min_route_pcis": 47746.5,
+    "max_route_pcis": 64309.0,
+    "off_grid_violations": 147880
+  },
+  "scenario_df": [
+    {
+      "n_units": 2,
+      "pcis_intercepted": 208802.5,
+      "coverage_pct": 76.42074827753429,
+      "total_stops": 11,
+      "est_fines_rs": 5500,
+      "marginal_pcis": 208802.5
+    },
+    {
+      "n_units": 3,
+      "pcis_intercepted": 242636.5,
+      "coverage_pct": 88.80383563147927,
+      "total_stops": 17,
+      "est_fines_rs": 8500,
+      "marginal_pcis": 33834.0
+    },
+    {
+      "n_units": 4,
+      "pcis_intercepted": 259830.5,
+      "coverage_pct": 95.09676002598567,
+      "total_stops": 21,
+      "est_fines_rs": 10500,
+      "marginal_pcis": 17194.0
+    },
+    {
+      "n_units": 5,
+      "pcis_intercepted": 273227.5,
+      "coverage_pct": 100.0,
+      "total_stops": 25,
+      "est_fines_rs": 12500,
+      "marginal_pcis": 13397.0
+    },
+    {
+      "n_units": 6,
+      "pcis_intercepted": 273227.5,
+      "coverage_pct": 100.0,
+      "total_stops": 25,
+      "est_fines_rs": 12500,
+      "marginal_pcis": 0.0
+    },
+    {
+      "n_units": 7,
+      "pcis_intercepted": 273227.5,
+      "coverage_pct": 100.0,
+      "total_stops": 25,
+      "est_fines_rs": 12500,
+      "marginal_pcis": 0.0
+    },
+    {
+      "n_units": 8,
+      "pcis_intercepted": 273227.5,
+      "coverage_pct": 100.0,
+      "total_stops": 25,
+      "est_fines_rs": 12500,
+      "marginal_pcis": 0.0
+    }
+  ],
+  "shift_differs": true,
+  "off_grid_count": 147880
+}

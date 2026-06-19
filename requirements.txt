@@ -1,0 +1,13 @@
+pandas>=2.0.0,<3
+numpy>=1.24.0,<3
+scikit-learn>=1.3.0,<2
+lightgbm>=4.0.0,<5
+h3>=4.0.0,<5
+hdbscan>=0.8.33,<1
+ortools>=9.7,<10
+streamlit>=1.28.0,<2
+plotly>=5.17.0,<6
+folium>=0.15.0,<1
+streamlit-folium>=0.15.0,<1
+requests>=2.31.0,<3
+pyarrow>=14.0.0,<20

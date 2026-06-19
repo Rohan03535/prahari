@@ -1,0 +1,13 @@
+{
+  "total_violations": 298450,
+  "data_days": 151,
+  "total_carriageway_blocked_m2": 2945080.0700000003,
+  "avg_capacity_reduction_pct": 25.986469776384336,
+  "total_delay_vehicle_hours": 766298.1079365083,
+  "total_delay_person_hours": 1149447.161904762,
+  "daily_avg_delay_veh_hours": 5074.821906864293,
+  "daily_avg_delay_person_hours": 7612.232860296437,
+  "heavy_vehicle_blocked_pct": 18.49363029372576,
+  "junction_delay_pct": 49.00429483483701,
+  "est_total_uncollected_fines_rs": 149225000
+}

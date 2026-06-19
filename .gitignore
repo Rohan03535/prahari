@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.venv-*/
+venv/
+.env
+*.egg-info/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Local-only raw data (105MB — do NOT commit)
+data/raw/
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+
+# Cache
+*.cache
