@@ -175,14 +175,15 @@ def get_enforcement_replay(_parking_df, n_units, shift_hrs, resolution: str):
 
 
 @st.cache_data(show_spinner="Optimizing patrol routes...")
-def get_patrol_plan(_junction_summary, n_units, shift_hrs, top_hotspots):
+def get_patrol_plan(shift_label, n_units, shift_hrs, top_hotspots, _junction_summary):
+    """shift_label is part of the cache key — _junction_summary is excluded by Streamlit convention."""
     result = solve_patrol_routing(_junction_summary, n_units, shift_hrs, top_hotspots)
     comparison = compare_with_baselines(_junction_summary, n_units, shift_hrs, top_hotspots)
     return result, comparison
 
 
 @st.cache_data(show_spinner="Running scenario simulation...")
-def get_scenario_curve(_junction_summary, shift_hrs, top_hotspots, units_tuple):
+def get_scenario_curve(shift_label, shift_hrs, top_hotspots, units_tuple, _junction_summary):
     return simulate_unit_scenarios(
         _junction_summary,
         list(units_tuple),
@@ -424,7 +425,9 @@ if page == "Patrol Command Center":
             junction_intel = build_junction_intel(parking_df)
             n_blind_visible = min(30, len(blind_spots_pre)) if blind_spots_pre is not None and not blind_spots_pre.empty else 30
 
-            result, comparison = get_patrol_plan(shift_junctions, cmd_n_units, cmd_shift_hrs, cmd_top_hotspots)
+            result, comparison = get_patrol_plan(
+                cmd_shift_label, cmd_n_units, cmd_shift_hrs, cmd_top_hotspots, shift_junctions,
+            )
             off_grid_count = int((parking_df["junction_name"] == "No Junction").sum())
             plan_metrics = compute_plan_metrics(result, comparison, cmd_n_units, cmd_shift_hrs, off_grid_count)
             est_stops = plan_metrics["est_stops"]
@@ -445,7 +448,9 @@ if page == "Patrol Command Center":
             )
 
             scenario_units = tuple(range(2, min(cmd_n_units + 4, 13)))
-            scenario_df = get_scenario_curve(shift_junctions, cmd_shift_hrs, cmd_top_hotspots, scenario_units)
+            scenario_df = get_scenario_curve(
+                cmd_shift_label, cmd_shift_hrs, cmd_top_hotspots, scenario_units, shift_junctions,
+            )
             sim_insight = scenario_punchline(scenario_df, cmd_n_units)
 
             shift_differs = (
