@@ -1,0 +1,54 @@
+{
+  "total_violations": 298450,
+  "off_grid": 147880,
+  "with_junction": 150570,
+  "junctions": 169,
+  "stations": 54,
+  "date_start": "2023-11-10",
+  "date_end": "2024-04-08",
+  "peak_hour": 10,
+  "flow": {
+    "total_violations": 298450,
+    "data_days": 151,
+    "total_carriageway_blocked_m2": 2945080.0700000003,
+    "avg_capacity_reduction_pct": 25.986469776384336,
+    "total_delay_vehicle_hours": 766298.1079365083,
+    "total_delay_person_hours": 1149447.161904762,
+    "daily_avg_delay_veh_hours": 5074.821906864293,
+    "daily_avg_delay_person_hours": 7612.232860296437,
+    "heavy_vehicle_blocked_pct": 18.49363029372576,
+    "junction_delay_pct": 49.00429483483701,
+    "est_total_uncollected_fines_rs": 149225000
+  },
+  "plan": {
+    "total_intercepted_pcis": 273227.5,
+    "intercept_pct": 100.0,
+    "improvement_vs_naive": 0.0,
+    "load_balance": 0.7424543998507207
+  },
+  "replay_junction": {
+    "improvement_pct": 1.3619203463426577,
+    "actual_pcis": 38805.5,
+    "prahari_pcis": 39334.0,
+    "holdout": "2024-03-26 to 2024-04-08"
+  },
+  "replay_hex": {
+    "improvement_pct": 5.21704397572509,
+    "actual_pcis": 38805.5,
+    "prahari_pcis": 40830.0,
+    "holdout": "2024-03-26 to 2024-04-08"
+  },
+  "model_metrics": {
+    "mae": 2.380719223337948,
+    "rmse": 12.164368895796823,
+    "precision": 0.6652222637280538,
+    "recall": 0.5690911415058162,
+    "f1": 0.6134132479074094,
+    "precision_at_5pct": 0.6109876543209877,
+    "hit_rate_at_5pct": 0.9633006347374495,
+    "precision_at_10pct": 1.0,
+    "hit_rate_at_10pct": 0.884,
+    "precision_at_20pct": 1.0,
+    "hit_rate_at_20pct": 0.9
+  }
+}

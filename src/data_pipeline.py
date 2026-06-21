@@ -5,9 +5,7 @@ import h3
 import sys
 sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parents[1]))
 from config import (
-    PARKING_CSV, PARKING_PARQUET, PARKING_SLIM_PARQUET, JUNCTION_INTEL_PARQUET,
-    JUNCTION_PARQUET, CELL_AGG_PARQUET, RECURRENCE_PARQUET,
-    PARKING_SLIM_COLUMNS,
+    PARKING_CSV, PARKING_PARQUET, JUNCTION_PARQUET, CELL_AGG_PARQUET, RECURRENCE_PARQUET,
     H3_RESOLUTION, H3_RESOLUTION_COARSE,
     VEHICLE_WEIGHTS, DEFAULT_VEHICLE_WEIGHT,
     VIOLATION_SEVERITY, DEFAULT_VIOLATION_SEVERITY,
@@ -159,35 +157,15 @@ def get_junction_summary(df: pd.DataFrame) -> pd.DataFrame:
 from typing import Optional
 
 
-def _optimize_parking_dtypes(df: pd.DataFrame) -> pd.DataFrame:
-    """Shrink memory for cloud deployment."""
-    cat_cols = ["junction_name", "police_station", "veh_type_final", "h3_index",
-                "validation_status", "violation_type", "device_id", "created_by_id"]
-    for col in cat_cols:
-        if col in df.columns and df[col].dtype == object:
-            df[col] = df[col].astype("category")
-    return df
-
-
 def load_bundled_pipeline() -> Optional[dict]:
     """Load pre-processed parquet bundles (for cloud deployment)."""
-    parquet_path = PARKING_SLIM_PARQUET if PARKING_SLIM_PARQUET.exists() else PARKING_PARQUET
-    if not parquet_path.exists():
+    if not PARKING_PARQUET.exists():
         return None
-
-    if parquet_path == PARKING_SLIM_PARQUET:
-        parking_df = pd.read_parquet(parquet_path)
-    else:
-        parking_df = pd.read_parquet(parquet_path)
-        keep = [c for c in PARKING_SLIM_COLUMNS if c in parking_df.columns]
-        parking_df = parking_df[keep].copy()
-
+    parking_df = pd.read_parquet(PARKING_PARQUET)
     if "created_datetime" in parking_df.columns:
         parking_df["created_datetime"] = pd.to_datetime(parking_df["created_datetime"], utc=True)
     if "date" in parking_df.columns and parking_df["date"].dtype == object:
         parking_df["date"] = pd.to_datetime(parking_df["date"]).dt.date
-
-    parking_df = _optimize_parking_dtypes(parking_df)
 
     junction_summary = pd.read_parquet(JUNCTION_PARQUET) if JUNCTION_PARQUET.exists() else get_junction_summary(parking_df)
     cell_agg = pd.read_parquet(CELL_AGG_PARQUET) if CELL_AGG_PARQUET.exists() else aggregate_cells(parking_df, resolution="fine")
