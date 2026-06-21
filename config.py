@@ -13,6 +13,17 @@ FLOW_SUMMARY_JSON = DATA_DIR / "flow_summary.json"
 JUNC_FLOW_PARQUET = DATA_DIR / "junc_flow.parquet"
 ROAD_TYPE_FLOW_PARQUET = DATA_DIR / "road_type_flow.parquet"
 BLIND_SPOTS_PARQUET = DATA_DIR / "blind_spots.parquet"
+PARKING_SLIM_PARQUET = DATA_DIR / "parking_slim.parquet"
+JUNCTION_INTEL_PARQUET = DATA_DIR / "junction_intel.parquet"
+
+# Columns kept in cloud bundle (~80MB RAM vs ~500MB for full parking export)
+PARKING_SLIM_COLUMNS = [
+    "latitude", "longitude", "junction_name", "police_station", "pcis",
+    "hour", "date", "h3_index", "veh_type_final", "vehicle_weight",
+    "has_junction", "is_main_road_viol", "device_id", "created_by_id",
+    "vehicle_number", "validation_status", "violation_type", "year_week",
+    "created_datetime",
+]
 
 # Optional raw CSV for local re-processing only
 PARKING_CSV = RAW_DATA_DIR / "jan_to_may_police_violation_anonymized.csv"

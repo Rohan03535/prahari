@@ -9,9 +9,10 @@ sys.path.insert(0, str(ROOT))
 import pandas as pd
 from config import (
     PARKING_CSV, PATROL_DEFAULTS, DEFAULT_TOP_HOTSPOTS, DEFAULT_SHIFT_LABEL,
-    DEFAULT_PATROL_PLAN_JSON,
+    DEFAULT_PATROL_PLAN_JSON, PARKING_SLIM_COLUMNS, PARKING_SLIM_PARQUET, JUNCTION_INTEL_PARQUET,
 )
-from src.data_pipeline import build_full_pipeline, load_bundled_pipeline
+from src.data_pipeline import build_full_pipeline, load_bundled_pipeline, _optimize_parking_dtypes
+from src.junction_intel import build_junction_intel_df
 from src.traffic_flow_impact import compute_flow_impact, aggregate_flow_impact, junction_flow_impact
 from src.spatial_analysis import discover_blind_spots
 from src.patrol_shift import junction_summary_for_shift
@@ -97,6 +98,14 @@ def main():
     data["junction_summary"].to_parquet(DATA_DIR / "junction_summary.parquet", index=False)
     data["cell_agg"].to_parquet(DATA_DIR / "cell_agg.parquet", index=False)
     data["recurrence"].to_parquet(DATA_DIR / "recurrence.parquet", index=False)
+
+    print("Building cloud-safe slim bundle (Streamlit ~1GB RAM)...")
+    keep = [c for c in PARKING_SLIM_COLUMNS if c in parking.columns]
+    slim = _optimize_parking_dtypes(parking[keep].copy())
+    slim.to_parquet(PARKING_SLIM_PARQUET, index=False, compression="snappy")
+    build_junction_intel_df(parking).to_parquet(JUNCTION_INTEL_PARQUET, index=False)
+    print(f"  parking_slim.parquet: {PARKING_SLIM_PARQUET.stat().st_size / 1024 / 1024:.1f} MB")
+    print(f"  junction_intel.parquet: {JUNCTION_INTEL_PARQUET.stat().st_size / 1024:.1f} KB")
 
     print("Computing flow impact (one-time)...")
     pf = compute_flow_impact(parking)

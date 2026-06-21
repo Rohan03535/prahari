@@ -18,24 +18,10 @@ from config import (
     FLOW_SUMMARY_JSON, JUNC_FLOW_PARQUET, ROAD_TYPE_FLOW_PARQUET, BLIND_SPOTS_PARQUET,
 )
 from src.patrol_shift import junction_summary_for_shift as _junction_summary_for_shift, SHIFT_HOUR_MAP
-from src.data_pipeline import build_full_pipeline, compute_pcis
-from src.spatial_analysis import (
-    discover_blind_spots, compute_enforcement_exposure, displacement_analysis,
-)
-from src.prediction import engineer_features, train_hurdle_model
-from src.optimizer import (
-    solve_patrol_routing, compare_with_baselines, simulate_unit_scenarios, compute_plan_metrics,
-)
+from src.data_pipeline import build_full_pipeline
+from src.traffic_flow_impact import ROAD_PROFILES, ASSUMPTIONS
 from src.patrol_briefing import generate_briefing_text, generate_briefing_html
-from src.analytics import (
-    enforcement_efficacy, chronic_offender_analysis,
-    system_health_analysis, temporal_trends, station_comparison,
-)
-from src.traffic_flow_impact import (
-    compute_flow_impact, aggregate_flow_impact, junction_flow_impact,
-    get_assumptions_text, ROAD_PROFILES, ASSUMPTIONS,
-)
-from src.enforcement_replay import run_enforcement_replay
+from src.junction_intel import load_junction_intel
 
 st.set_page_config(
     page_title="PRAHARI - Parking Intelligence",
@@ -129,6 +115,7 @@ def get_precomputed_extras():
 
 @st.cache_data(show_spinner="Computing traffic flow impact...")
 def get_flow_impact(_parking_df):
+    from src.traffic_flow_impact import compute_flow_impact, aggregate_flow_impact, junction_flow_impact
     df = compute_flow_impact(_parking_df)
     summary = aggregate_flow_impact(df)
     junc_impact = junction_flow_impact(df)
@@ -140,42 +127,50 @@ def get_blind_spots(_parking_df):
     pre = get_precomputed_extras()
     if pre[3] is not None and not pre[3].empty:
         return pre[3]
+    from src.spatial_analysis import discover_blind_spots
     return discover_blind_spots(_parking_df)
 
 
 @st.cache_data(show_spinner="Computing enforcement exposure map...")
 def get_exposure(_parking_df):
+    from src.spatial_analysis import compute_enforcement_exposure
     return compute_enforcement_exposure(_parking_df)
 
 
 @st.cache_data(show_spinner="Training prediction model...")
 def get_predictions(_cell_agg, _recurrence):
+    from src.prediction import engineer_features, train_hurdle_model
     features = engineer_features(_cell_agg, _recurrence)
     return train_hurdle_model(features)
 
 
 @st.cache_data(show_spinner="Analyzing enforcement effectiveness...")
 def get_efficacy(_parking_df):
+    from src.analytics import enforcement_efficacy
     return enforcement_efficacy(_parking_df)
 
 
 @st.cache_data(show_spinner="Profiling chronic offenders...")
 def get_offenders(_parking_df):
+    from src.analytics import chronic_offender_analysis
     return chronic_offender_analysis(_parking_df)
 
 
 @st.cache_data(show_spinner="Checking system health...")
 def get_system_health(_parking_df):
+    from src.analytics import system_health_analysis
     return system_health_analysis(_parking_df)
 
 
 @st.cache_data(show_spinner=False)
 def get_enforcement_replay(_parking_df, n_units, shift_hrs, resolution: str):
+    from src.enforcement_replay import run_enforcement_replay
     return run_enforcement_replay(_parking_df, n_units, shift_hrs, resolution=resolution)
 
 
 @st.cache_data(show_spinner="Optimizing patrol routes...")
 def get_patrol_plan(_junction_summary, n_units, shift_hrs, top_hotspots):
+    from src.optimizer import solve_patrol_routing, compare_with_baselines
     result = solve_patrol_routing(_junction_summary, n_units, shift_hrs, top_hotspots)
     comparison = compare_with_baselines(_junction_summary, n_units, shift_hrs, top_hotspots)
     return result, comparison
@@ -183,6 +178,7 @@ def get_patrol_plan(_junction_summary, n_units, shift_hrs, top_hotspots):
 
 @st.cache_data(show_spinner="Running scenario simulation...")
 def get_scenario_curve(_junction_summary, shift_hrs, top_hotspots, units_tuple):
+    from src.optimizer import simulate_unit_scenarios
     return simulate_unit_scenarios(
         _junction_summary,
         list(units_tuple),
@@ -230,24 +226,7 @@ def _flatten_violations(series):
 
 @st.cache_data(show_spinner=False)
 def build_junction_intel(_parking_df):
-    """Per-junction violation mix for route rationale lines."""
-    jdf = _parking_df[_parking_df["junction_name"] != "No Junction"]
-    rows = []
-    for jname, grp in jdf.groupby("junction_name"):
-        top_veh = grp["veh_type_final"].mode().iloc[0] if len(grp) else "vehicle"
-        heavy_pct = (grp["vehicle_weight"] >= 3.0).mean()
-        main_pct = grp["is_main_road_viol"].mean()
-        peak = int(grp.groupby("hour")["pcis"].sum().idxmax()) if len(grp) else 0
-        top_viol = _flatten_violations(grp["violations_list"])
-        rows.append({
-            "junction_name": jname,
-            "top_vehicle": top_veh,
-            "heavy_pct": heavy_pct,
-            "main_road_pct": main_pct,
-            "peak_hour": peak,
-            "top_violation": top_viol,
-        })
-    return pd.DataFrame(rows)
+    return load_junction_intel(_parking_df)
 
 
 def unit_rationale(route: dict, junction_intel: pd.DataFrame, shift_label: str) -> str:
@@ -1347,7 +1326,7 @@ elif page == "Intelligence: System Health":
 
     st.markdown("---")
     st.markdown("## Temporal Trends")
-    trends = temporal_trends(parking_df)
+    trends = __import__("src.analytics", fromlist=["temporal_trends"]).temporal_trends(parking_df)
     fig_trend = px.line(trends, x="year_week", y="total_pcis",
                         title="Weekly PCIS Trend", markers=True,
                         labels={"year_week": "Week", "total_pcis": "Total PCIS"})
